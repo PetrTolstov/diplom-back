@@ -1,4 +1,6 @@
-interface ScheduleEvent {
+import { Room } from "./Room";
+
+export interface ScheduleEvent {
     id: number;
     journalId: number;
     subjectStudyPeriodId: number | null;

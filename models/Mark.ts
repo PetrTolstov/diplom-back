@@ -1,4 +1,4 @@
-interface Mark {
+export interface Mark {
     entryId: number;
     entryCode: string | null;
     nameEt: string;
