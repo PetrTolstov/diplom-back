@@ -1,0 +1,65 @@
+{
+    "swaggerDefinition": {
+        "openapi": "3.0.0",
+        "info": {
+            "title": "API Documentation",
+            "version": "1.0.0",
+            "description": "Documentation for the API"
+        },
+        
+        "paths": {
+            "/groups": {
+                "get": {
+                    "summary": "Get list of groups",
+                    "responses": {
+                        "200": {
+                            "description": "Successful response"
+                        }
+                    }
+                }
+            },
+            "/schedule": {
+                "get": {
+                    "summary": "Get events for a group",
+                    "parameters": [
+                        {
+                            "name": "groupId",
+                            "in": "query",
+                            "required": true,
+                            "description": "Group ID",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        {
+                            "name": "fromDate",
+                            "in": "query",
+                            "required": true,
+                            "description": "Start date",
+                            "schema": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        },
+                        {
+                            "name": "toDate",
+                            "in": "query",
+                            "required": true,
+                            "description": "End date",
+                            "schema": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Successful response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "apis": ["./**/*.ts"]
+}
