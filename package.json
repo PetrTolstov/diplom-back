@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx nodemon src/index.ts",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,7 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/got": "^9.6.12",
+    "@types/helmet": "^4.0.0",
     "@types/node-fetch": "^2.6.3",
     "@types/request": "^2.48.8",
     "axios": "^1.4.0",
