@@ -8,19 +8,21 @@ import swaggerOptions from "./swaggerOptions.json";
 import { init } from "./tahvel/auth/authInit";
 import { fetchEvents } from "./tahvel/schedule/get";
 import { fetchGroups } from "./tahvel/group/get";
-import cookieParser from "cookie-parser"
+import cookieParser from "cookie-parser";
 
 const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cookieParser(undefined, {
-    decode: function (value) {
-      // Ваша логика расшифровки httpOnly куки, если она требуется
-      return value;
-    }
-  }));
+app.use(
+    cookieParser(undefined, {
+        decode: function (value) {
+            // Ваша логика расшифровки httpOnly куки, если она требуется
+            return value;
+        },
+    })
+);
 
 // Swagger UI setup
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
@@ -32,11 +34,11 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.post("/", (req, res) => {
-    const { cookies } = req;
+    const cookies = req.headers.cookie;
     console.log("Получены куки:", cookies);
-  
+    console.log(req.body)
     res.json({ message: "Куки успешно обработаны", cookies });
-  });
+});
 
 app.get("/groups", async (req: Request, res: Response, next: NextFunction) => {
     try {
