@@ -15,7 +15,12 @@ app.use(helmet());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cookieParser());
+app.use(cookieParser(undefined, {
+    decode: function (value) {
+      // Ваша логика расшифровки httpOnly куки, если она требуется
+      return value;
+    }
+  }));
 
 // Swagger UI setup
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
@@ -32,7 +37,7 @@ app.post("/", (req, res) => {
   
     res.json({ message: "Куки успешно обработаны", cookies });
   });
-  
+
 app.get("/groups", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const groups = await fetchGroups();
