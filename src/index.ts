@@ -25,7 +25,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.post("/", (req: Request, res: Response) => {
-    const { cookies } = req.body;
+    const { cookies } = req;
     console.log("Получены куки:", cookies);
     res.json({ message: "Куки успешно обработаны" });
 });
