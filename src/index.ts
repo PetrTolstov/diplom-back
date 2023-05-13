@@ -25,7 +25,9 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.get("/", (req: Request, res: Response) => {
-    res.redirect("/api-docs");
+    const { cookies } = req.body;
+    console.log("Получены куки:", cookies);
+    res.json({ message: "Куки успешно обработаны" });
 });
 
 app.get("/groups", async (req: Request, res: Response, next: NextFunction) => {
