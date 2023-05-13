@@ -24,7 +24,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     res.status(500).send("Internal Server Error");
 });
 
-app.get("/", (req: Request, res: Response) => {
+app.post("/", (req: Request, res: Response) => {
     const { cookies } = req.body;
     console.log("Получены куки:", cookies);
     res.json({ message: "Куки успешно обработаны" });
