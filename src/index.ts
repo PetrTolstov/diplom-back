@@ -39,6 +39,7 @@ app.post("/", (req, res) => {
 
 app.get("/tahvel", async (req: Request, res: Response, next: NextFunction) => {
     try {
+        console.log(req.headers.authorization)
         const info = await getInfoFromTahvel(req.headers.authorization!);
         res.send(info);
     } catch (err) {

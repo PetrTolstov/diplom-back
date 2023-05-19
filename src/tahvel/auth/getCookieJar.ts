@@ -28,7 +28,7 @@ export async function getCookieJar(token: string) {
         reject(new Error(`Error loading page: ${response.statusCode}`));
         return;
       }
-    
+    console.log(body)
       resolve(cookieJar);
     });
   });
