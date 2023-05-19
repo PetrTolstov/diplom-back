@@ -10,6 +10,7 @@ import { getFullPersonInfo } from "./getFullPeronInfo";
 
 
 export async function getInfoFromTahvel(token : string) {
+    try{
     const jar : any = await getCookieJar(token)
     const user : User = await getUserData(jar)
     const marks = await getJournalLastResult(jar, user.student)
@@ -21,5 +22,8 @@ export async function getInfoFromTahvel(token : string) {
         "absences" : absences,
         "tasks" : tasks,
         "fullPersonInfo" : fullPersonInfo
+    }}
+    catch (e){
+        return e
     }
 }

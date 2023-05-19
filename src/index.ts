@@ -24,8 +24,6 @@ app.use(
     })
 );
 
-
-
 // Swagger UI setup
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -36,13 +34,12 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.post("/", (req, res) => {
-    
     res.json({ message: "Куки успешно обработаны" });
 });
 
 app.get("/tahvel", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const info = await getInfoFromTahvel(req.body.token)
+        const info = await getInfoFromTahvel(req.headers.authorization!);
         res.send(info);
     } catch (err) {
         next(err);
