@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerOptions from "./swaggerOptions.json";
-import { init } from "./tahvel/auth/authInit";
+import { getInfoFromTahvel } from "./tahvel/auth/authInit";
 import { fetchEvents } from "./tahvel/schedule/get";
 import { fetchGroups } from "./tahvel/group/get";
 import cookieParser from "cookie-parser";
@@ -24,6 +24,8 @@ app.use(
     })
 );
 
+
+
 // Swagger UI setup
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -34,10 +36,17 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.post("/", (req, res) => {
-    const cookies = req.headers.cookie;
-    console.log("Получены куки:", cookies);
-    console.log(req.body)
-    res.json({ message: "Куки успешно обработаны", cookies });
+    
+    res.json({ message: "Куки успешно обработаны" });
+});
+
+app.get("/tahvel", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const info = await getInfoFromTahvel(req.body.token)
+        res.send(info);
+    } catch (err) {
+        next(err);
+    }
 });
 
 app.get("/groups", async (req: Request, res: Response, next: NextFunction) => {

@@ -1,8 +1,14 @@
 import request from "request";
 import { User } from "../../models/User";
+import { Mark } from "../../models/Mark";
+import { Absence } from "../../models/Absence";
+import { Task } from "../../models/Task";
 
-export async function getUserData(cookieJar: any) : Promise<User> {
-    const url = "https://tahvel.edu.ee/hois_back/user";
+export async function getTasks(
+    cookieJar: any,
+    studentId: number
+): Promise<Task[]> {
+    const url = `https://tahvel.edu.ee/hois_back/journals/studentJournalTasks?studentId=${studentId}`; //&presentTasks=true
 
     const options = {
         url,
@@ -11,7 +17,6 @@ export async function getUserData(cookieJar: any) : Promise<User> {
             "User-Agent": "Mozilla/5.0",
         },
     };
-
 
     return new Promise((resolve, reject) => {
         request(options, (error, response, body) => {
@@ -24,8 +29,8 @@ export async function getUserData(cookieJar: any) : Promise<User> {
                 reject(new Error(`Error loading page: ${response.statusCode}`));
                 return;
             }
-            console.log(body)
-            resolve(JSON.parse(body));
+
+            resolve(JSON.parse(body).tasks);
         });
     });
 }
