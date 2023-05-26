@@ -1,15 +1,19 @@
+// Import required modules and models
 import request from "request";
 import { User } from "../../models/User";
 import { Mark } from "../../models/Mark";
 import { Absence } from "../../models/Absence";
 import { Task } from "../../models/Task";
 
+// Function to fetch tasks for a student
 export async function getTasks(
     cookieJar: any,
     studentId: number
 ): Promise<Task[]> {
-    const url = `https://tahvel.edu.ee/hois_back/journals/studentJournalTasks?studentId=${studentId}`; //&presentTasks=true
+    // Set the URL for the tasks request
+    const url = `https://tahvel.edu.ee/hois_back/journals/studentJournalTasks?studentId=${studentId}`;
 
+    // Set the request options
     const options = {
         url,
         jar: cookieJar,
@@ -18,18 +22,23 @@ export async function getTasks(
         },
     };
 
+    // Return a promise that resolves with the tasks
     return new Promise((resolve, reject) => {
+        // Make the tasks request
         request(options, (error, response, body) => {
             if (error) {
+                // If an error occurs, reject the promise with the error
                 reject(error);
                 return;
             }
 
             if (response.statusCode !== 200) {
+                // If the response status code is not 200, reject the promise with an error
                 reject(new Error(`Error loading page: ${response.statusCode}`));
                 return;
             }
 
+            // Resolve the promise with the tasks
             resolve(JSON.parse(body).tasks);
         });
     });
